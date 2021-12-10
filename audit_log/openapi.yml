@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  description: This API provides audit info
+  version: "1.0.0"
+  title: Audit API
+  contact:
+    email: rdevera6@my.bcit.ca
+paths:
+  /inventory/count:
+    get:
+      summary: gets inventory count from history
+      operationId: app.get_inventory_count
+      description: gets inventory count after timestamp
+      parameters:
+        - name: index
+          in: query
+          description: gets the count at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: successfuly returned a count event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/InventoryScan'
+        '400':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /inventory/checked:
+    get:
+      summary: gets checked items from history
+      operationId: app.get_checked_items
+      description: gets checked items from the event store
+      parameters:
+        - name: index
+          in: query
+          description: gets checked items at the index in the event store
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: successfuly returned a check event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/CheckInOut'
+        '400':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: not found
+components:
+  schemas:
+    InventoryScan:
+      required:
+        - total_count
+        - expected_count
+        - items_missing
+        - surplus
+        - time_scanned
+      properties:
+        total_count:
+          type: integer
+          example: 731
+        expected_count:
+          type: integer
+          example: 735
+        items_missing:
+          type: integer
+          example: 4
+        surplus:
+          type: integer
+          example: 0
+        time_scanned:
+          type: string
+          format: date-time
+          example: 2021-09-27-29T09:12:33.001Z
+      type: object
+    CheckInOut:
+      required:
+        - product_code
+        - location
+        - item_from
+        - item_type
+        - time_scanned
+      properties:
+        product_code:
+          type: string
+          example: MB-583955
+        location:
+          type: string
+          example: stage room
+        item_from:
+          type: string
+          example: back room
+        item_type:
+          type: string
+          example: Men's Bottoms
+        time_scanned:
+          type: string
+          format: date-time
+          example: 2021-09-27-29T09:12:33.001Z
+      type: object

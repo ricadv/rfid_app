@@ -1,0 +1,9 @@
+version: 1
+countevent:
+  url: http://localhost:8090/inventory/count
+checkevent:
+  url: http://localhost:8090/inventory/checked
+events:
+  hostname: acit3855.westus.cloudapp.azure.com
+  port: 9092
+  topic: events

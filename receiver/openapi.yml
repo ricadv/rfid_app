@@ -1,0 +1,101 @@
+openapi: 3.0.0
+info:
+  description: This API receives from inventory check events from the RFID app
+  version: "1.0.0"
+  title: RFID API
+  contact:
+    email: rdevera6@my.bcit.ca
+tags:
+  - name: RFID
+    description: RFID app features that counts and checks inventory
+paths:
+  /inventory/count:
+    post:
+      tags:
+        - RFID
+      summary: receives total count of inventory after hourly scan
+      operationId: app.inventory_scan
+      description: updates inventory count
+      responses:
+        '201':
+          description: scan complete
+        '400':
+          description: error occured
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryScan'
+        description: scanning
+
+  /inventory/checked:
+    post:
+      tags:
+        - RFID
+      summary:  reports when and what items get relocated from each area of the store
+      operationId: app.check_item
+      description: adds or subtracts an item from the back room inventory
+      responses:
+        '201':
+          description: item scanned
+        '400':
+          description: error occured
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInOut'
+        description: Inventory item to add
+
+components:
+  schemas:
+    InventoryScan:
+      required:
+        - total_count
+        - expected_count
+        - items_missing
+        - surplus
+        - time_scanned
+      properties:
+        total_count:
+          type: integer
+          example: 731
+        expected_count:
+          type: integer
+          example: 735
+        items_missing:
+          type: integer
+          example: 4
+        surplus:
+          type: integer
+          example: 0
+        time_scanned:
+          type: string
+          format: date-time
+          example: 21-10-18 11:01:16Z
+      type: object
+    CheckInOut:
+      required:
+        - product_code
+        - location
+        - item_from
+        - item_type
+        - time_scanned
+      properties:
+        product_code:
+          type: string
+          example: MB-583955
+        location:
+          type: string
+          example: stage room
+        item_from:
+          type: string
+          example: back room
+        item_type:
+          type: string
+          example: Men's Bottoms
+        time_scanned:
+          type: string
+          format: date-time
+          example: 21-10-18 11:01:16Z
+      type: object

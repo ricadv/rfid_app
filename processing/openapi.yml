@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  description: This API receives from inventory check events from the RFID app
+  version: "1.0.0"
+  title: RFID API
+  contact:
+    email: rdevera6@my.bcit.ca
+
+paths:
+  /stats:
+    get:
+      summary: gets event stats
+      operationId: app.get_stats
+      description: gets count and check events statistics
+      responses:
+        '200':
+          description: successfuly returned a list of both events
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/CountStats'
+        '400':
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    CountStats:
+      required:
+        - num_scans
+        - num_checked
+        - max_surplus
+        - max_items_missing
+      properties:
+        num_scans:
+          type: integer
+          example: 50
+        num_checked:
+          type: integer
+          example: 50
+        max_items_missing:
+          type: integer
+          example: 100
+        max_surplus:
+          type: integer
+          example: 100
+      type: object

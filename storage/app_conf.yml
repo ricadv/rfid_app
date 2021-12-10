@@ -1,0 +1,14 @@
+version: 1
+datastore:
+  user: admin
+  password: Admin!234567
+  hostname: acit3855.westus.cloudapp.azure.com
+  port: 3306
+  db: inventory
+events:
+  hostname: acit3855.westus.cloudapp.azure.com
+  port: 9092
+  topic: events
+retry:
+  max_retries: 3
+  sleep: 5
