@@ -1,7 +1,7 @@
 import mysql.connector
 
 conn = mysql.connector.connect(user='admin', password='Admin!234567',
-                               host='acit3855.westus.cloudapp.azure.com',
+                               host='rfid.ricadevera.com',
                                database='inventory')
 
 c = conn.cursor()

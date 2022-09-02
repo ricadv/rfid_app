@@ -2,11 +2,11 @@ version: 1
 datastore:
   user: admin
   password: Admin!234567
-  hostname: acit3855.westus.cloudapp.azure.com
+  hostname: rfid.ricadevera.com
   port: 3306
   db: inventory
 events:
-  hostname: acit3855.westus.cloudapp.azure.com
+  hostname: rfid.ricadevera.com
   port: 9092
   topic: events
 retry:
