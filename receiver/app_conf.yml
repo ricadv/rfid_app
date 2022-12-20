@@ -4,7 +4,7 @@ countevent:
 checkevent:
   url: http://localhost:8090/inventory/checked
 events:
-  hostname: rfid.ricadevera.com
+  hostname: ec2-34-223-195-171.us-west-2.compute.amazonaws.com
   port: 9092
   topic: events
 retry:
